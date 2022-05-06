@@ -127,7 +127,8 @@ if __name__ == '__main__':
                 x_real = x_real.to(device)
 
             set_seed(seed_flag)
-            z = torch.randn(args.batch_size, args.z_dim, 1, 1).to(device)
+            #z = torch.randn(args.batch_size, args.z_dim, 1, 1).to(device)
+            z = torch.randn(args.batch_size, args.z_dim).to(device)
             seed_flag = seed_flag + 1
 
 #--------training D-----------
