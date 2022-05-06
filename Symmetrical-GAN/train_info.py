@@ -184,6 +184,7 @@ if __name__ == '__main__':
                     with open(output_dir+'/loss.txt','a+') as f:
                         print('ep_%d_iter_%d'%(ep,it_g),file=f)
                         print('G_loss:'+str(G_loss.item())+'------'+'D_loss'+str(D_loss.item()),file=f)
+                        print('G_loss2:'+str(G_loss2.item())+'------'+'D_loss2'+str(D_loss2.item()),file=f)
 
         # save checkpoint
         if (ep+1)%10==0:   
