@@ -89,10 +89,10 @@ class D(nn.Module): # Discriminator with SpectrualNorm, GDscale网络的参数�
         self.fc = nn.Sequential(
                 nn.Linear(output_dim, 1024),
                 nn.BatchNorm1d(1024),
-                nn.ReLU(),
+                nn.LeakyReLU(0.2, inplace=True)
                 nn.Linear(1024, output_dim),#[1024,128*8*8]-input_size=32
-                nn.BatchNorm1d(output_dim),
-                nn.Sigmoid(),
+                #nn.BatchNorm1d(output_dim),
+                #nn.Sigmoid(),
             )
 
     def forward(self, x):

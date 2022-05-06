@@ -1,37 +1,4 @@
-2022 - JAN - 19 
-    - 发现之前的Sym-GAN的D在最后输出为(b,dim,5,5)调整为(b,dim,1,1)
-    - 之前的实验Adam beta都是 0.5, 但是elr的adam默认为0.0
+- 2022 5 6
 
-    -做了以下测试：
-        1.原实验 128_Dout_dim ,即 beta1:0.5 
-        2.原实验 256_Dout_dim ,即 beta1:0.5 
-        3.原实验 256D + beta1:0.0 
-        以下都是 beta1:0.5
-        4.原实验 256D + minibatch+D
-        5.原实验 256D + elr
-        6.原实验 256D + elr + minibatch+D
-
-2022 - JAN - 20
-    - 修复了D的minibatch的bug，即最后一层改为minibatch_layer+linear，而非在最后一层之后添加(miniBD_v2)
-
-Jan - 21
-
-    - 考虑D的本质,最后一层：
-            - 用纯粹的FC
-            - 用self-attention (Conv , FC，Conv+Fc)
-            - D全部用FC (EqLR or Common)
-
-Jan - 25
-
-    - 做了以下实验:
-        1.最后一层只有lieanr, 没有miniBatch
-        2.最后一层是Attn的feature, Attn是Conv (v1)
-        3.最后一层是Attn的feature, Attn是Conv (v2)
-        4.最后一层是Attn的out+linear输出outdim （失败）
-
-
-
-
-To do list:
-    - D 最后一层换 self-attention: Q K V 三个FC试一下表征 
-
+    - 2FC + DCONV:
+        D的最后一层为sigmoid：效果为模式崩溃

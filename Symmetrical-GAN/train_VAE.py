@@ -29,6 +29,7 @@ parser.add_argument('--adversarial_loss_mode', default='gan', choices=['gan', 'h
 parser.add_argument('--gradient_penalty_mode', default='none', choices=['none', '1-gp', '0-gp', 'lp'])
 parser.add_argument('--gradient_penalty_sample_mode', default='line', choices=['line', 'real', 'fake', 'dragan'])
 parser.add_argument('--gradient_penalty_weight', type=float, default=10.0)
+parser.add_argument('--experiment_name', default=None)
 parser.add_argument('--img_size',type=int, default=256) # STL:128, CelebA-HQ: 256
 parser.add_argument('--img_channels', type=int, default=3)# RGB:3 ,L:1
 parser.add_argument('--dataname', default='Celeba_HQ') #choices=['mnist','fashion_mnist','cifar10', 'STL10',  'celeba','Celeba_HQ'] and so on.
@@ -40,13 +41,12 @@ parser.add_argument('--Gscale', type=int, default=8) # G parameter size, scale�
 parser.add_argument('--GDscale', type=int, default=8) # D parameter size (ratio with G),Gscale的规模(在D中默认和Gscale相同)
 parser.add_argument('--Dscale', type=int, default=1) # Dscale相对Gscale缩小的倍数
 parser.add_argument('--hidden_scale', type=int, default=2)
-parser.add_argument('--experiment_name', default='D_lr_noNormACinLastlayer')
 args = parser.parse_args()
 
 # output_dir
 if args.experiment_name == None:
-    args.experiment_name = '%s_%s-Zdim%d-ZoutDim%d-Hidden%d-imgS%d-Batch%d'\
-    %(args.experiment_name,args.dataname,args.z_dim,args.z_out_dim,args.hidden_scale,args.img_size,args.batch_size)
+    args.experiment_name = '%s-Zdim%d-ZoutDim%d-Hidden%d-imgS%d-Batch%d'\
+    %(args.dataname,args.z_dim,args.z_out_dim,args.hidden_scale,args.img_size,args.batch_size)
 
 if not os.path.exists('output'):
     os.mkdir('output')
@@ -184,6 +184,7 @@ if __name__ == '__main__':
                     with open(output_dir+'/loss.txt','a+') as f:
                         print('ep_%d_iter_%d'%(ep,it_g),file=f)
                         print('G_loss:'+str(G_loss.item())+'------'+'D_loss'+str(D_loss.item()),file=f)
+                        print('G_loss2:'+str(G_loss2.item())+'------'+'D_loss2'+str(D_loss2.item()),file=f)
 
         # save checkpoint
         if (ep+1)%10==0:   
