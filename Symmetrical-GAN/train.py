@@ -38,7 +38,7 @@ parser.add_argument('--Gscale', type=int, default=8) # G parameter size, scale�
 parser.add_argument('--GDscale', type=int, default=8) # D parameter size (ratio with G),Gscale的规模(在D中默认和Gscale相同)
 parser.add_argument('--Dscale', type=int, default=1) # Dscale相对Gscale缩小的倍数
 parser.add_argument('--hidden_scale', type=int, default=2)
-parser.add_argument('--experiment_name', default='D_lr_noNormACperlayer')
+parser.add_argument('--experiment_name', default='D_lr_noNormACperlayer_v2')
 parser.add_argument('--fc_hidden_dim', type=int, default=512)
 args = parser.parse_args()
 
