@@ -16,9 +16,7 @@ import lpips
 from utils.utils import set_seed
 from utils.custom_adam import LREQAdam
 
-# ==============================================================================
 # =                                   param                                    =
-# ==============================================================================
 # command line
 parser = argparse.ArgumentParser(description='the training args')
 parser.add_argument('--epochs', type=int, default=100)
@@ -41,12 +39,13 @@ parser.add_argument('--GDscale', type=int, default=8) # D parameter size (ratio 
 parser.add_argument('--Dscale', type=int, default=1) # Dscale相对Gscale缩小的倍数
 parser.add_argument('--hidden_scale', type=int, default=2)
 parser.add_argument('--experiment_name', default='D_lr_noNormACinLastlayer')
+parser.add_argument('--fc_hidden_dim', type=int, default=512, default='fc_hidden_dim')
 args = parser.parse_args()
 
 # output_dir
 if args.experiment_name == None:
-    args.experiment_name = '%s_%s-Zdim%d-ZoutDim%d-Hidden%d-imgS%d-Batch%d'\
-    %(args.experiment_name,args.dataname,args.z_dim,args.z_out_dim,args.hidden_scale,args.img_size,args.batch_size)
+    args.experiment_name = '%s_%s-fc_h_dim%d-Zdim%d-ZoutDim%d-Hidden%d-imgS%d-Batch%d'\
+    %(args.experiment_name,args.dataname,args.fc_hidden_dim,args.z_dim,args.z_out_dim,args.hidden_scale,args.img_size,args.batch_size)
 
 if not os.path.exists('output'):
     os.mkdir('output')
@@ -80,8 +79,8 @@ print('data-size:    '+str(shape))
 # =                                   model                                    =
 # ==============================================================================
 
-G = net.G(input_dim=args.z_dim, output_dim=args.img_channels, image_size=args.img_size, Gscale=args.Gscale, hidden_scale=args.hidden_scale).to(device)
-D = net.D(output_dim=args.z_out_dim, input_dim=args.img_channels, image_size=args.img_size, GDscale=args.GDscale, Dscale4G=args.Dscale, hidden_scale=args.hidden_scale).to(device)
+G = net.G(input_dim=args.z_dim, output_dim=args.img_channels, image_size=args.img_size, Gscale=args.Gscale, hidden_scale=args.hidden_scale, fc_hidden_dim=args.fc_hidden_dim).to(device)
+D = net.D(output_dim=args.z_out_dim, input_dim=args.img_channels, image_size=args.img_size, GDscale=args.GDscale, Dscale4G=args.Dscale, hidden_scale=args.hidden_scale, fc_hidden_dim=args.fc_hidden_dim).to(device)
 # summary(G,(args.z_dim, 1, 1))
 # summary(D,(args.img_channels, args.img_size, args.img_size))
 x,y = net.get_parameter_number(G),net.get_parameter_number(D)
@@ -109,9 +108,7 @@ def sample(z):
     G.eval()
     return G(z)
 
-# ==============================================================================
 # =                                    Train                                     =
-# ==============================================================================
 
 if __name__ == '__main__':
     writer = tensorboardX.SummaryWriter(os.path.join(output_dir, 'summaries'))

@@ -18,8 +18,9 @@ def get_para_GByte(parameter_number):
      y=parameter_number['Total']*8/1024/1024/1024
      return {'Total_GB': x, 'Trainable_BG': y}
 
+
 class G(nn.Module): #Generator
-    def __init__(self, input_dim=256, output_dim=3, image_size=256, Gscale=8,  hidden_scale = 2): # output_dim = image_channels
+    def __init__(self, input_dim=256, output_dim=3, image_size=256, Gscale=8, hidden_scale=2, fc_hidden_dim = 1024): # output_dim = image_channels
         super().__init__()
         layers = []
         up_times = math.log(image_size,2)- 3 # 输入为4*4时,another_times=1
@@ -27,10 +28,10 @@ class G(nn.Module): #Generator
         bias_flag = False
 
         self.fc = nn.Sequential(
-            nn.Linear(input_dim, 1024),
-            nn.BatchNorm1d(1024),
+            nn.Linear(input_dim, fc_hidden_dim),
+            nn.BatchNorm1d(fc_hidden_dim),
             nn.ReLU(),
-            nn.Linear(1024, input_dim),#[1024,128*8*8]-input_size=32
+            nn.Linear(fc_hidden_dim, input_dim),#[1024,128*8*8]-input_size=32
             nn.BatchNorm1d(input_dim),
             nn.ReLU(),
         )
@@ -62,7 +63,7 @@ class G(nn.Module): #Generator
         return y
 
 class D(nn.Module): # Discriminator with SpectrualNorm, GDscale网络的参数规模，Dscale4G网络的缩小倍数
-    def __init__(self, output_dim=256, input_dim=3, image_size=256, GDscale=8, Dscale4G=1, hidden_scale = 2): #新版的GDscale是D中G的倍数(G输入首层特征即D最后输出的隐藏特征,默认和Gscale一样)，Dscale4G是相对G缩小的倍数
+    def __init__(self, output_dim=256, input_dim=3, image_size=256, GDscale=8, Dscale4G=1, hidden_scale=2, fc_hidden_dim=1024): #新版的GDscale是D中G的倍数(G输入首层特征即D最后输出的隐藏特征,默认和Gscale一样)，Dscale4G是相对G缩小的倍数
         super().__init__()
         layers=[]
         up_times = math.log(image_size,2)- 3
@@ -87,10 +88,10 @@ class D(nn.Module): # Discriminator with SpectrualNorm, GDscale网络的参数�
         self.net = nn.Sequential(*layers)
 
         self.fc = nn.Sequential(
-                nn.Linear(output_dim, 1024),
-                nn.BatchNorm1d(1024),
+                nn.Linear(output_dim, fc_hidden_dim),
+                nn.BatchNorm1d(fc_hidden_dim),
                 nn.LeakyReLU(0.2, inplace=True),
-                nn.Linear(1024, output_dim),#[1024,128*8*8]-input_size=32
+                nn.Linear(fc_hidden_dim, output_dim),#[1024,128*8*8]-input_size=32
                 #nn.BatchNorm1d(output_dim),
                 #nn.Sigmoid(),
             )
