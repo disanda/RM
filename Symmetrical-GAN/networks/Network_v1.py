@@ -29,25 +29,25 @@ class G(nn.Module): #Generator
 
         self.fc = nn.Sequential(
             nn.Linear(input_dim, fc_hidden_dim),
-            #nn.BatchNorm1d(fc_hidden_dim),
-            nn.InstanceNorm1d(fc_hidden_dim, affine=False, eps=1e-8),
+            nn.BatchNorm1d(fc_hidden_dim),
+            #nn.InstanceNorm1d(fc_hidden_dim, affine=False, eps=1e-8),
             nn.ReLU(),
             nn.Linear(fc_hidden_dim, input_dim),#[1024,128*8*8]-input_size=32
-            #nn.BatchNorm1d(input_dim),
-            nn.InstanceNorm1d(input_dim, affine=False, eps=1e-8),
+            nn.BatchNorm1d(input_dim),
+            #nn.InstanceNorm1d(input_dim, affine=False, eps=1e-8),
             nn.ReLU(),
         )
 
         # first conv layer
         layers.append(nn.ConvTranspose2d(input_dim, first_hidden_dim, kernel_size=4,stride=1,padding=0,bias=bias_flag)) # 1*1 input -> 4*4
-        layers.append(nn.InstanceNorm2d(first_hidden_dim, affine=False, eps=1e-8))
+        layers.append(nn.BatchNorm2d(first_hidden_dim, affine=False, eps=1e-8))
         layers.append(nn.ReLU())
 
         # 2: upsamplings, (1x1) -> 4x4 -> 8x8 -> 16x16 -> 32*32 -> 64 -> 128 -> 256
         hidden_dim = first_hidden_dim
         while up_times>0:
             layers.append(nn.ConvTranspose2d(hidden_dim, int(hidden_dim/hidden_scale), kernel_size=4, stride=2, padding=1 ,bias=bias_flag))
-            layers.append(nn.InstanceNorm2d(int(hidden_dim/hidden_scale), affine=False, eps=1e-8))
+            layers.append(nn.BatchNorm2d(int(hidden_dim/hidden_scale), affine=False, eps=1e-8))
             layers.append(nn.ReLU())
             up_times = up_times - 1
             hidden_dim = hidden_dim // 2
