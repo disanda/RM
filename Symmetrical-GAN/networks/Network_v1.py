@@ -4,7 +4,7 @@ import torch
 from torch import nn
 import torch.nn.utils.spectral_norm as spectral_norm
 import math
-import fc_modules
+import networks.fc_modules
 import sys 
 sys.path.append('../')
 import lreq as ln
