@@ -179,10 +179,7 @@ if __name__ == '__main__':
 #--------------save---------------
             if it_g%100==0:
                 with torch.no_grad():
-                    if args.BN == True:
-                        x_sample = sample(z)
-                    else:
-                        x_sample = x_fake
+                    x_sample = sample(z)
                     torchvision.utils.save_image(x_sample*0.5+0.5,sample_dir+'/ep%d_it%d.jpg'%(ep,it_g), nrow=int(np.sqrt(args.batch_size)))
                     with open(output_dir+'/loss.txt','a+') as f:
                         print('ep_%d_iter_%d'%(ep,it_g),file=f)

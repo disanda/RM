@@ -51,8 +51,6 @@ ckpt_dir = './info_output/%s/checkpoints' % experiment_name
 if not os.path.exists(ckpt_dir):
 	os.mkdir(ckpt_dir)
 
-
-
 #--------------------------data-----------------------
 transform = torchvision.transforms.Compose(
     [torchvision.transforms.Resize(size=(input_size, input_size), interpolation=Image.BICUBIC),
