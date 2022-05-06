@@ -47,8 +47,8 @@ args = parser.parse_args()
 
 # output_dir
 if args.experiment_name == None:
-    args.experiment_name = '%s-Gs%d-GDs%d-Ds%d-Zdim%d-ZoutDim%d-Hidden%d-imgS%d-Batch%d'\
-    %(args.dataname,args.Gscale,args.GDscale,args.Dscale,args.z_dim,args.z_out_dim,args.hidden_scale,args.img_size)
+    args.experiment_name = '%s-Zdim%d-ZoutDim%d-Hidden%d-imgS%d-Batch%d'\
+    %(args.dataname,args.z_dim,args.z_out_dim,args.hidden_scale,args.img_size,args.batch_size)
 
 if not os.path.exists('output'):
     os.mkdir('output')
