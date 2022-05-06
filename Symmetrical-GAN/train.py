@@ -99,14 +99,10 @@ with open(output_dir+'/net.txt','w+') as f:
 # adversarial_loss_functions
 d_loss_fn, g_loss_fn = loss_func.get_adversarial_losses_fn(args.adversarial_loss_mode)
 
-
 # optimizer
-if args.elr == False:
-    G_optimizer = torch.optim.Adam(G.parameters(), lr=args.lr, betas=(args.beta_1, 0.999))
-    D_optimizer = torch.optim.Adam(D.parameters(), lr=args.lr, betas=(args.beta_1, 0.999))
-else:
-    G_optimizer = LREQAdam([{'params':G.parameters()},], lr=args.lr, betas=(args.beta_1, 0.999))
-    D_optimizer = LREQAdam([{'params':D.parameters()},], lr=args.lr, betas=(args.beta_1, 0.999))
+G_optimizer = torch.optim.Adam(G.parameters(), lr=args.lr, betas=(args.beta_1, 0.999))
+D_optimizer = torch.optim.Adam(D.parameters(), lr=args.lr, betas=(args.beta_1, 0.999))
+
 
 @torch.no_grad()
 def sample(z):
