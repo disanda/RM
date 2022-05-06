@@ -33,7 +33,7 @@ parser.add_argument('--experiment_name', default=None)
 parser.add_argument('--img_size',type=int, default=256) # STL:128, CelebA-HQ: 256
 parser.add_argument('--img_channels', type=int, default=3)# RGB:3 ,L:1
 parser.add_argument('--dataname', default='Celeba_HQ') #choices=['mnist','fashion_mnist','cifar10', 'STL10',  'celeba','Celeba_HQ'] and so on.
-parser.add_argument('--datapath', default='/_wmwang/dataset/CelebA-HQ-img/') 
+parser.add_argument('--datapath', default='/_wmwang/dataSet/CelebA-HQ-img/') 
 parser.add_argument('--data_flag', type=bool, default=False) # True: STL10, False: Celeba_HQ
 parser.add_argument('--z_dim', type=int, default=256) # input to G
 parser.add_argument('--z_out_dim', type=int, default=256) # output from D
