@@ -34,7 +34,7 @@ parser.add_argument('--experiment_name', default=None)
 parser.add_argument('--img_size',type=int, default=256) # STL:128, CelebA-HQ: 256
 parser.add_argument('--img_channels', type=int, default=3)# RGB:3 ,L:1
 parser.add_argument('--dataname', default='Celeba_HQ') #choices=['mnist','fashion_mnist','cifar10', 'STL10',  'celeba','Celeba_HQ'] and so on.
-parser.add_argument('--datapath', default='./dataset/CelebA-HQ-img/') 
+parser.add_argument('--datapath', default='/_wmwang/RM/dataset/CelebA-HQ-img/') 
 parser.add_argument('--data_flag', type=bool, default=False) # True: STL10, False: Celeba_HQ
 parser.add_argument('--z_dim', type=int, default=256) # input to G
 parser.add_argument('--z_out_dim', type=int, default=256) # output from D
@@ -47,8 +47,8 @@ args = parser.parse_args()
 
 # output_dir
 if args.experiment_name == None:
-    args.experiment_name = '%s-Gs%d-GDs%d-Ds%d-Zdim%d-ZoutDim%d-Hidden%d-imgS%d-Batch%d-BN%s-GDstd%s-Grelu%s-elr%s-mniBatch_D%s-finalLayer%s'\
-    %(args.dataname,args.Gscale,args.GDscale,args.Dscale,args.z_dim,args.z_out_dim,args.hidden_scale,args.img_size,args.batch_size,args.BN,args.GDstd,args.Grelu,args.elr,args.mniBatch_D,args.Final_Linear)
+    args.experiment_name = '%s-Gs%d-GDs%d-Ds%d-Zdim%d-ZoutDim%d-Hidden%d-imgS%d-Batch%d'\
+    %(args.dataname,args.Gscale,args.GDscale,args.Dscale,args.z_dim,args.z_out_dim,args.hidden_scale,args.img_size)
 
 if not os.path.exists('output'):
     os.mkdir('output')
