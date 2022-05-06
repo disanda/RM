@@ -30,11 +30,11 @@ class G(nn.Module): #Generator
         self.fc = nn.Sequential(
             nn.Linear(input_dim, fc_hidden_dim),
             #nn.BatchNorm1d(fc_hidden_dim),
-            nn.InstanceNorm2d(fc_hidden_dim, affine=False, eps=1e-8),
+            nn.InstanceNorm1d(fc_hidden_dim, affine=False, eps=1e-8),
             nn.ReLU(),
             nn.Linear(fc_hidden_dim, input_dim),#[1024,128*8*8]-input_size=32
             #nn.BatchNorm1d(input_dim),
-            nn.InstanceNorm2d(input_dim, affine=False, eps=1e-8),
+            nn.InstanceNorm1d(input_dim, affine=False, eps=1e-8),
             nn.ReLU(),
         )
 
