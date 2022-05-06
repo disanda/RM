@@ -29,10 +29,12 @@ class G(nn.Module): #Generator
 
         self.fc = nn.Sequential(
             nn.Linear(input_dim, fc_hidden_dim),
-            nn.BatchNorm1d(fc_hidden_dim),
+            #nn.BatchNorm1d(fc_hidden_dim),
+            nn.InstanceNorm2d(fc_hidden_dim, affine=False, eps=1e-8),
             nn.ReLU(),
             nn.Linear(fc_hidden_dim, input_dim),#[1024,128*8*8]-input_size=32
-            nn.BatchNorm1d(input_dim),
+            #nn.BatchNorm1d(input_dim),
+            nn.InstanceNorm2d(input_dim, affine=False, eps=1e-8),
             nn.ReLU(),
         )
 
@@ -88,8 +90,8 @@ class D(nn.Module): # Discriminator with SpectrualNorm, GDscale网络的参数�
         self.net = nn.Sequential(*layers)
 
         self.fc = nn.Sequential(
-                nn.Linear(output_dim, fc_hidden_dim),
-                nn.BatchNorm1d(fc_hidden_dim),
+                spectral_norm(nn.Linear(output_dim, fc_hidden_dim)),
+                #nn.BatchNorm1d(fc_hidden_dim),
                 nn.LeakyReLU(0.2, inplace=True),
                 nn.Linear(fc_hidden_dim, output_dim),#[1024,128*8*8]-input_size=32
                 #nn.BatchNorm1d(output_dim),
