@@ -39,7 +39,7 @@ parser.add_argument('--GDscale', type=int, default=8) # D parameter size (ratio 
 parser.add_argument('--Dscale', type=int, default=1) # Dscale相对Gscale缩小的倍数
 parser.add_argument('--hidden_scale', type=int, default=2)
 parser.add_argument('--experiment_name', default='D_lr_noNormACinLastlayer')
-parser.add_argument('--fc_hidden_dim', type=int, default=512, default='fc_hidden_dim')
+parser.add_argument('--fc_hidden_dim', type=int, default=512)
 args = parser.parse_args()
 
 # output_dir
