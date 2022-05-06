@@ -82,8 +82,8 @@ print('data-size:    '+str(shape))
 
 G = net.G(input_dim=args.z_dim, output_dim=args.img_channels, image_size=args.img_size, Gscale=args.Gscale, hidden_scale=args.hidden_scale).to(device)
 D = net.D(output_dim=args.z_out_dim, input_dim=args.img_channels, image_size=args.img_size, GDscale=args.GDscale, Dscale4G=args.Dscale, hidden_scale=args.hidden_scale).to(device)
-summary(G,(args.z_dim, 1, 1))
-summary(D,(args.img_channels, args.img_size, args.img_size))
+# summary(G,(args.z_dim, 1, 1))
+# summary(D,(args.img_channels, args.img_size, args.img_size))
 x,y = net.get_parameter_number(G),net.get_parameter_number(D)
 x_GB, y_GB = net.get_para_GByte(x),net.get_para_GByte(y)
 
