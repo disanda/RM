@@ -8,7 +8,7 @@ import os
 import yaml
 import torchvision
 import utils.data_tools as data
-import networks.DCGAN as net #通过参数Gscale 和 Dscale4g 控制 G和D参数规模的网络
+import networks.Network_v1 as net #通过参数Gscale 和 Dscale4g 控制 G和D参数规模的网络
 import utils.loss_func as loss_func
 from torchsummary import summary
 import itertools
