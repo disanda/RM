@@ -6,7 +6,7 @@ import torch.nn.utils.spectral_norm as spectral_norm
 import math
 import sys 
 sys.path.append('../')
-import fc_modules
+import networks.fc_modules
 
 def get_parameter_number(net):
     total_num = sum(p.numel() for p in net.parameters())
