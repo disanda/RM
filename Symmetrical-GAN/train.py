@@ -43,7 +43,7 @@ parser.add_argument('--fc_hidden_dim', type=int, default=512, default='fc_hidden
 args = parser.parse_args()
 
 # output_dir
-if args.experiment_name == None:
+if True:
     args.experiment_name = '%s_%s-fc_h_dim%d-Zdim%d-ZoutDim%d-Hidden%d-imgS%d-Batch%d'\
     %(args.experiment_name,args.dataname,args.fc_hidden_dim,args.z_dim,args.z_out_dim,args.hidden_scale,args.img_size,args.batch_size)
 
