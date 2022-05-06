@@ -4,10 +4,9 @@ import torch
 from torch import nn
 import torch.nn.utils.spectral_norm as spectral_norm
 import math
-import networks.fc_modules
 import sys 
 sys.path.append('../')
-import lreq as ln
+import fc_modules
 
 def get_parameter_number(net):
     total_num = sum(p.numel() for p in net.parameters())
